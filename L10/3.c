@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    int coef;
+    double coef;
     int deg;
 } CLAN;
 
@@ -32,8 +32,8 @@ POLINOM citaj(void)
     {
         printf("A_%d * x^%d -> A_%d = ", i, i, i);
 
-        int coef;
-        scanf("%d", &coef);
+        double coef;
+        scanf("%lf", &coef);
 
         if (coef)
         {
@@ -104,7 +104,7 @@ POLINOM pomnozi(POLINOM p1, POLINOM p2)
     {
         for (int j = 0; j < p2.count; j++)
         {
-            int coef = p1.terms[i].coef * p2.terms[j].coef;
+            double coef = p1.terms[i].coef * p2.terms[j].coef;
             int deg = p1.terms[i].deg + p2.terms[j].deg;
 
             CLAN *clan = nadji_clan(p, deg);
@@ -131,16 +131,20 @@ void ispisi(POLINOM p)
 {
     for (int i = 0; i < p.count; i++)
     {
-        int coef = p.terms[i].coef;
+        double coef = p.terms[i].coef;
         int deg = p.terms[i].deg;
 
-        if (deg == 0)
+        switch (deg)
         {
-            printf("%d ", coef);
-        }
-        else
-        {
-            printf("%d * x^%d ", p.terms[i].coef, p.terms[i].deg);
+        case 0:
+            printf("%.3lf ", coef);
+            break;
+        case 1:
+            printf("%.3lf * x ", coef);
+            break;
+        default:
+            printf("%.3lf * x^%d ", p.terms[i].coef, p.terms[i].deg);
+            break;
         }
 
         if (i < p.count - 1)
